@@ -2,7 +2,7 @@ name: sqlite_at_runtime
 description: A flutter package that allows creation of multiple SQLite databases and their manipulation thus, at application runtime.
 version: 0.0.1
 author: AgutuSam <agutusam@writeme.com> 
-home: https://github.com/AgutuSam/sqlite_at_runtime.git
+homepage: https://github.com/AgutuSam/sqlite_at_runtime.git
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -10,6 +10,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  sqflite: ^1.1.7+3
+  shared_preferences: ^0.5.4+6  
+  path: ^1.6.4
 
 dev_dependencies:
   flutter_test:
@@ -17,8 +20,7 @@ dev_dependencies:
 
   # For information on the generic Dart part of this file, see the
   # following page: https://dart.dev/tools/pub/pubspec
-  sqflite: ^1.1.7+3
-  shared_preferences: ^0.5.4+6
+  
 
 # The following section is specific to Flutter.
 flutter:
