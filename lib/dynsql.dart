@@ -104,14 +104,14 @@ class DatabaseHelper {
     final String dbPath = prefs.getString('dbPath');
     final dyn = await openDatabase(dbPath, version: 1);
 
-    Future delTabVar(Database dyn, int newVersion) async {
-      await dyn.execute('DROP TABLE $tableVar');
+    Future delTabVar(Database dyn, int newVersion,String table) async {
+      await dyn.execute('DROP TABLE $table');
     }
 
     Future<dynamic> returnMethod() async {
       for (t = 0; t < num; t++) {
         tableVar = tableName[t] as String;
-        delTabVar(dyn, newVersion);
+        delTabVar(dyn, newVersion,tableVar);
       }
     }
 
