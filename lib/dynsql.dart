@@ -95,6 +95,21 @@ class DatabaseHelper {
     return returnMethod();
   }
 
+  Future<dynamic> deleteTable(List tableName) async {
+    int t;
+    final int num = tableName.length;
+    String tableVar;
+ Future<dynamic> returnMethod() async {
+      for (t = 0; t < num; t++) {
+        tableVar = tableName[t] as String;
+        await dyn.execute('DROP TABLE $tableVar');
+        colnameConst = [];
+      colnameVar = [];
+      }
+    }
+    return returnMethod();
+  }
+
   // INSERT INTO TABLE!
   Future<dynamic> insertTabVal(String tableName, List samplesTitle, List samplesValue) async {
     final dyClient = await dyn;

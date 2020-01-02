@@ -94,8 +94,10 @@ await tableCreate(['sample1','sample2','sample3'],['name TEXT','age INTEGER','te
 
 // a default 'Id INTEGER PRIMARY KEY AUTOINCREMENT' column is created in this process.
 
-<!-- //DELETE/DROP TABLE FROM EXISTING DB
-await deleteTable(int id, String tabName); -->
+//DELETE/DROP TABLE FROM EXISTING DB
+//takes in a list of tables to be deleted/dropped.
+//the list can without doubt be made of only one table!
+await deleteTable(List tabName);
 
 //GET ALL TABLES FROM EXISTING DB
 await getTables();
