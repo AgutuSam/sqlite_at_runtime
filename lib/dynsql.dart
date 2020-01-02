@@ -99,10 +99,18 @@ class DatabaseHelper {
     int t;
     final int num = tableName.length;
     String tableVar;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String dbPath = prefs.getString('dbPath');
+    final dyn = await openDatabase(dbPath, version: 1);
+
+    Future delTabVar(Database dyn, int newVersion) async {
+      await dyn.execute('DROP TABLE $tableVar');
+    }
+
  Future<dynamic> returnMethod() async {
       for (t = 0; t < num; t++) {
         tableVar = tableName[t] as String;
-        await dyn.execute('DROP TABLE $tableVar');
+        delTabVar(dyn, newVersion);
         colnameConst = [];
       colnameVar = [];
       }
