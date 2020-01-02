@@ -53,7 +53,7 @@ class DatabaseHelper {
     return dyn;
   }
 
-  Future<dynamic> newTable(List tableName,List variables) async {
+  Future<dynamic> newTable(List tableName, List variables) async {
     int t;
     String tableVar;
     final int num = tableName.length;
@@ -74,7 +74,7 @@ class DatabaseHelper {
           }
         }
       }
-     
+
       final colNameVar = colnameVar.join();
       print(tableName);
       print(colNameVar);
@@ -89,9 +89,10 @@ class DatabaseHelper {
         tableVar = tableName[t] as String;
         createTabVar(dyn, newVersion);
         colnameConst = [];
-      colnameVar = [];
+        colnameVar = [];
       }
     }
+
     return returnMethod();
   }
 
@@ -107,19 +108,19 @@ class DatabaseHelper {
       await dyn.execute('DROP TABLE $tableVar');
     }
 
- Future<dynamic> returnMethod() async {
+    Future<dynamic> returnMethod() async {
       for (t = 0; t < num; t++) {
         tableVar = tableName[t] as String;
         delTabVar(dyn, newVersion);
-        colnameConst = [];
-      colnameVar = [];
       }
     }
+
     return returnMethod();
   }
 
   // INSERT INTO TABLE!
-  Future<dynamic> insertTabVal(String tableName, List samplesTitle, List samplesValue) async {
+  Future<dynamic> insertTabVal(
+      String tableName, List samplesTitle, List samplesValue) async {
     final dyClient = await dyn;
     String tabVal, tabName;
     for (var i = 0; i < samplesTitle.length; i++) {
@@ -147,14 +148,14 @@ class DatabaseHelper {
     tabname = [];
     tabval = [];
 
-    Future resultMethod() async{
-      final result = await dyClient.rawInsert(
-        'INSERT INTO $tableName($tabName)'
-        'VALUES($tabVal)');
+    Future resultMethod() async {
+      final result = await dyClient.rawInsert('INSERT INTO $tableName($tabName)'
+          'VALUES($tabVal)');
       tabname = [];
-    tabval = [];
+      tabval = [];
       return result;
     }
+
     return resultMethod();
   }
 
@@ -165,13 +166,13 @@ class DatabaseHelper {
   }
 
   // UPDATE TABLE VALUES!
-  Future<int> updateTabVal(List sampleUpdate,List sampleUpdateValue, int id) async {
+  Future<int> updateTabVal(
+      List sampleUpdate, List sampleUpdateValue, int id) async {
     final dyClient = await dyn;
     var tabData;
-    for (var i = 0; i <sampleUpdate.length; i++) {
+    for (var i = 0; i < sampleUpdate.length; i++) {
       if (i != sampleUpdate.length - 1) {
-        tabdata.add(
-            sampleUpdate[i] + equal + sampleUpdateValue[i] + comma);
+        tabdata.add(sampleUpdate[i] + equal + sampleUpdateValue[i] + comma);
       } else if (i == sampleUpdate.length - 1) {
         tabdata.add(sampleUpdate[i] + equal + sampleUpdateValue[i]);
       }
