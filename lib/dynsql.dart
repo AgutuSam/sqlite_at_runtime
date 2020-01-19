@@ -191,7 +191,7 @@ class DatabaseHelper {
   }
 
   // GET ALLFROM TABLE!
-  Future<List<Map>> getAllSamples(String tabName) async {
+  Future<dynamic> getAllSamples(String tabName) async {
     final dyClient = await dyn;
     final result = await dyClient.rawQuery('SELECT * FROM $tabName');
     print(result.toList());
@@ -199,7 +199,7 @@ class DatabaseHelper {
   }
 
   // GET TABLE STRUCTURE!
-  Future<List<Map>> getTableInfo(String tabName) async {
+  Future<dynamic> getTableInfo(String tabName) async {
     final dyClient = await dyn;
     final result = await dyClient.rawQuery('PRAGMA table_info($tabName)');
     print(result.toList());
@@ -207,7 +207,7 @@ class DatabaseHelper {
   }
 
   // GET ALL TABLES!
-  Future<List<Map>> getAllTables() async {
+  Future<dynamic> getAllTables() async {
     final dyClient = await dyn;
     final result = await dyClient.rawQuery('SELECT name FROM sqlite_master '
         'WHERE type == "table" AND name NOT LIKE "sqlite_%" AND name NOT LIKE "android%" AND name NOT LIKE "%_CONST"');

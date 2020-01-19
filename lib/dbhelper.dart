@@ -40,7 +40,7 @@ class DatabaseHelper {
 
   void _onCreate(Database db, int newVersion) async {
     await db.execute(
-        'CREATE TABLE defaultDB (Id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,note TEXT,time TEXT)');
+        'CREATE TABLE defaultDB (Id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,note TEXT,time TEXT UNIQUE)');
   }
 
   // ADD NEW DATABASE!
@@ -60,14 +60,15 @@ class DatabaseHelper {
     tabName = tabname.join();
     final DateTime today = DateTime.now();
     final String nameTime =
-        "$quote${entity[0]}${today.year.toString()}${today.month.toString().padLeft(2, '0')}${today.day.toString().padLeft(2, '0')}${today.hour.toString().padLeft(2, '0')}${today.minute.toString().padLeft(2, '0')}$quote";
+        "$quote${entity[0]}${today.year.toString()}${today.month.toString().padLeft(2, '0')}${today.day.toString().padLeft(2, '0')}${today.hour.toString().padLeft(2, '0')}${today.minute.toString().padLeft(2, '0')}${today.second.toString().padLeft(2, '0')}$quote";
     print(tabName);
     final result =
         await dbClient.rawInsert('INSERT INTO defaultDB(name,note,time)'
             'VALUES($tabName,$nameTime)');
-    tabName = [];
+   tabname = [];
     print(result);
-    daync.createDB(nameTime);
+    final String databaseName = entity[0] as String;
+    daync.createDB(databaseName);
     return result;
   }
 
@@ -77,13 +78,14 @@ class DatabaseHelper {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String dbPath = prefs.getString('dbPath');
     final dir = Directory(dbPath);
+    print(dbPath);
     print(id);
     print(name);
     final bool exist = await databaseExists(dbPath);
     print(exist);
     await dbClient.rawDelete('DELETE FROM defaultDB WHERE Id = $id');
     dir.deleteSync(recursive: true);
-    await deleteDatabase(dbPath);
+    // await deleteDatabase(dbPath);
     print(exist);
   }
 

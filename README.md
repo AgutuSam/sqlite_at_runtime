@@ -1,9 +1,5 @@
 # sqlite_at_runtime
 
-<!-- [![pub package](https://img.shields.io/pub/v/sqflite.svg)](https://pub.dev/packages/sqflite)
-[![git hub](https://travis-ci.org/tekartik/sqflite.svg?branch=master)](https://travis-ci.org/tekartik/sqflite) -->
-
-
 SQLite plugin for [Flutter](https://flutter.io).
 Supports both iOS and Android.
 
@@ -38,23 +34,29 @@ Once an application is set up, a default SQLite Database is created, with a tabl
 The major infomation stored here is an id (as the primary key, an auto incremental  integer), the database name and an optional note for the database. 
 ```dart
 // CREATE A NEW DATABASE
-await addNewDB(String name, String note);
+await Sqlartime.addNewDB(String name, String note);
+/*
+Creation of databases need be done with nowledge of existing databases.
+In as much as the databases are differentiated with a timestamp; the process will only create a new database if and only oif there doesn't exist a database with that name.
+*/
 
 //GET A LIST OF ALL EXISTING DATABASES
- await fetchDBs(); 
+ await Sqlartime.fetchDBs(); 
 
  /* this returns the name, Id and note of the existing databases
 in json. To get any of these entities thus:*/
-var list = await fetchDBs(); 
+var list = await Sqlartime.fetchDBs(); 
 //get id
 final id = list[index]['Id'];
 //get DB name
 final id = list[index]['name'];
 //get note
 final id = list[index]['note'];
+//get timestamp
+final id = list[index]['time'];
 
 //DELETE/DROP AN EXISTING DATABASE
-  await deleteDb(int id, String dbName); 
+  await Sqlartime.deleteDb(int id, String dbName); 
 
 /*A SQLite database is a file in the file system identified by a path. If relative, this path is relative to the path obtained by `getDatabasesPath()`, which is the default database directory on Android and the documents directory on iOS.
 The deleteDB() method deletes the database details as stored in the default database, thus the importance to access and provide the database id (from the fetchDBs() method).
@@ -62,7 +64,7 @@ The method goes on to delete the file of the named database from the default fil
 
 ```
 
-<!-- * See [more information on opening a database](https://github.com/tekartik/sqflite/blob/master/sqflite/doc/opening_db.md). -->
+* See [more information on opening a database](https://github.com/AgutuSam/sqlite_at_runtime.git). 
 
 
 ### SQL queries
@@ -75,10 +77,10 @@ lifespan of the database CRUD queries!
 ```dart
 //OPEN AN EXISTING DB
 //the method closes the default database before opening the prescribed runtime created database
-await openDb(String dbName);
+await Sqlartime.openDb(String dbName);
   
 //ADD TABLE(S) TO EXISTING DB
-await tableCreate(List tableName, List variables);
+await Sqlartime.tableCreate(List tableName, List variables);
 
 /*
 The above method take two lists; 
@@ -90,44 +92,44 @@ an 'age' column of type 'int' and a 'temp' column that takes in floating points.
 
 example:
 */
-await tableCreate(['sample1','sample2','sample3'],['name TEXT','age INTEGER','temp REAL']);
+await Sqlartime.tableCreate(['sample1','sample2','sample3'],['name TEXT','age INTEGER','temp REAL']);
 
 // a default 'Id INTEGER PRIMARY KEY AUTOINCREMENT' column is created in this process.
 
 //DELETE/DROP TABLE FROM EXISTING DB
 //takes in a list of tables to be deleted/dropped.
 //the list can without doubt be made of only one table!
-await deleteTable(List tabName);
+await Sqlartime.deleteTable(List tabName);
 
 //GET ALL TABLES FROM EXISTING DB
-await getTables();
+await Sqlartime.getTables();
 
 //INSERT INTO TABLE
     //to insert into a table, provide all of three:
     //1. the table name
     //2. a list of the column names to be inserted into
     //3. a list of values that fall respective to the column names provided in #2
-await insertIntoTable(String tableName, List columnTitle, List samplesValue);
+await Sqlartime.insertIntoTable(String tableName, List columnTitle, List samplesValue);
 
 //GET ALL FROM TABLE
 //this returns a list of all table entities, including id(s)
-await getAll(String tabName);
+await Sqlartime.getAll(String tabName);
 
 //DELETE FROM TABLE
 //this method takes in the table name and the entity id and goes on to delete everything with the 
 //specified id
 //this makes the above method of getting table items a prudent method before the delete method
-await deleteTableValues(int id, String tabName);
+await Sqlartime.deleteTableValues(int id, String tabName);
 
 // UPDATE TABLE VALUES
 //muchlike the insert method, the update method takes a list of columns to be manipulated and a list of 
 //values for this manipulation
 //finally, it takes the id of the entity to be manipulated
-await updateTableValues(List sampleUpdate, List sampleUpdateValue, int id);
+await Sqlartime.updateTableValues(List sampleUpdate, List sampleUpdateValue, int id);
 
 //CLOSE AN OPEN DATABASE/
 //it is important to close a database once the lifespan of all methods realted to it are done!
-await closeDyn();
+await Sqlartime.closeDyn();
 ```
 
 <!-- Basic information on SQL [here](https://github.com/tekartik/sqflite/blob/master/sqflite/doc/sql.md). -->
